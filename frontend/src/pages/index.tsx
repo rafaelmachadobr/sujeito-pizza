@@ -24,12 +24,21 @@ export default function Home() {
   async function handleLogin(event: FormEvent) {
     event.preventDefault()
     
+    if(email === '' || password === ''){
+      alert("Preencha os dados")
+      return
+    }
+
+    setLoading(true)
+
     let data = {
       email,
       password
     }
 
     await singIn(data)
+
+    setLoading(false)
   }
 
   return (
@@ -55,7 +64,7 @@ export default function Home() {
             onChange={ (e) => setPassword(e.target.value)}
           />
 
-          <Button type="submit" loading={false}>Acessar</Button>
+          <Button type="submit" loading={loading}>Acessar</Button>
         </form>
 
         <Link href="/singup" legacyBehavior>
