@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react"
+import { useState, FormEvent, useContext } from "react"
 
 import Head from "next/head"
 import Image from "next/image"
@@ -9,9 +9,14 @@ import logoImg from '../../../public/logo.svg'
 import { Input } from "../../components/ui/Input"
 import { Button } from "../../components/ui/Button"
 
+import { AuthContext } from "../../contexts/AuthContext"
+import { toast } from "react-toastify"
+
 import Link from "next/link"
 
 export default function SingUp() {
+  const { singUp } = useContext(AuthContext)
+
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -22,11 +27,21 @@ export default function SingUp() {
     event.preventDefault()
 
     if(name === '' || email === '' || password === ''){
-      alert("Preencha todos os campos")
+      toast.warning("Preencha todos os campos")
       return
     }
 
     setLoading(true)
+
+    let data = {
+      name,
+      email,
+      password
+    }
+
+    await singUp(data)
+
+    setLoading(false)
   }
 
   return (
