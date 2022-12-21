@@ -1,108 +1,109 @@
-import { createContext, ReactNode, useState } from 'react'
+import { createContext, ReactNode, useState } from "react";
 
-import { api } from '../services/apiClient'
+import { api } from "../services/apiClient";
 
-import { destroyCookie, setCookie, parseCookies } from 'nookies'
-import Router from 'next/router'
+import { destroyCookie, setCookie, parseCookies } from "nookies";
+import Router from "next/router";
 
-import { toast } from 'react-toastify'
+import { toast } from "react-toastify";
 
 type AuthContextData = {
-    user: UserProps
-    isAuthenticated: boolean
-    singIn: (credentials: SingInProps) => Promise<void>
-    singOut: () => void
-    singUp: (credentials: SingUpProps) => Promise<void>
-}
+  user: UserProps;
+  isAuthenticated: boolean;
+  singIn: (credentials: SingInProps) => Promise<void>;
+  singOut: () => void;
+  singUp: (credentials: SingUpProps) => Promise<void>;
+};
 
 type UserProps = {
-    id: string
-    name: string
-    email: string
-}
+  id: string;
+  name: string;
+  email: string;
+};
 
 type SingInProps = {
-    email: string
-    password: string
-}
+  email: string;
+  password: string;
+};
 
 type SingUpProps = {
-    name: string
-    email: string
-    password: string
-}
+  name: string;
+  email: string;
+  password: string;
+};
 
 type AuthProviderProps = {
-    children: ReactNode
-}
+  children: ReactNode;
+};
 
-export const AuthContext = createContext({} as AuthContextData)
+export const AuthContext = createContext({} as AuthContextData);
 
-export function singOut(){
-    try{
-        destroyCookie(undefined, '@nextauth.token')
-        Router.push('/')
-    }catch{
-        console.log('erro ao desligar')
-    }
+export function singOut() {
+  try {
+    destroyCookie(undefined, "@nextauth.token");
+    Router.push("/");
+  } catch {
+    console.log("erro ao desligar");
+  }
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-    const [user, setUser] = useState<UserProps>()
-    const isAuthenticated = !!user
+  const [user, setUser] = useState<UserProps>();
+  const isAuthenticated = !!user;
 
-    async function singIn({ email, password }: SingInProps) {
-        try{
-            const response = await api.post('/session', {
-                email,
-                password
-            })
-            
-            const { id, name, token } = response.data
+  async function singIn({ email, password }: SingInProps) {
+    try {
+      const response = await api.post("/session", {
+        email,
+        password,
+      });
 
-            setCookie(undefined, '@nextauth.token', token, {
-                maxAge: 60 * 60 * 24 * 30,
-                path: "/"
-            })
+      const { id, name, token } = response.data;
 
-            setUser({
-                id,
-                name,
-                email
-            })
+      setCookie(undefined, "@nextauth.token", token, {
+        maxAge: 60 * 60 * 24 * 30,
+        path: "/",
+      });
 
-            api.defaults.headers['Authorization'] = `Bearer ${token}`
+      setUser({
+        id,
+        name,
+        email,
+      });
 
-            toast.success('Logado com sucesso!')
+      api.defaults.headers["Authorization"] = `Bearer ${token}`;
 
-            Router.push('/dashboard')
+      toast.success("Logado com sucesso!");
 
-        }catch(err){
-            toast.error('Erro ao acessar!')
-            console.log("Erro ao acessar: ", err)
-        }
+      Router.push("/dashboard");
+    } catch (err) {
+      toast.error("Erro ao acessar!");
+      console.log("Erro ao acessar: ", err);
     }
+  }
 
-    async function singUp({ name, email, password }: SingUpProps) {
-        try{
-            const response = await api.post('/users', {
-                name,
-                email,
-                password
-            })
+  async function singUp({ name, email, password }: SingUpProps) {
+    try {
+      const response = await api.post("/users", {
+        name,
+        email,
+        password,
+      });
 
-            toast.success('Conta criada com sucesso!')
+      toast.success("Conta criada com sucesso!");
 
-            Router.push('/')
-        }catch(err){
-            toast.error('Erro ao cadastrar!')
-            console.log('erro ao cadastrar ', err)
-        }
+      Router.push("/");
+    } catch (err) {
+      toast.error("Erro ao cadastrar!");
+      console.log("erro ao cadastrar ", err);
     }
+  }
 
-    return(
-        <AuthContext.Provider value={{ user, isAuthenticated, singIn, singOut, singUp }}>
-            {children}
-        </AuthContext.Provider>
-    )
+  return (
+    <AuthContext.Provider
+      value={{ user, isAuthenticated, singIn, singOut, singUp }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 }
