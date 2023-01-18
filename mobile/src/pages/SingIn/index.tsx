@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -8,7 +8,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import { AuthContext } from "../../contexts/AuthContext";
+
 export default function SingIn() {
+  const { user } = useContext(AuthContext)
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
