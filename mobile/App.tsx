@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, StatusBar } from "react-native";
-import SingIn from "./src/pages/SingIn";
+
+import { NavigationContainer } from "@react-navigation/native";
+import Routes from "./src/routes";
 
 export default function App() {
   return (
-    <View>
+    <NavigationContainer>
       <StatusBar backgroundColor="#1d1d2e" barStyle="light-content" translucent={false} />
-      <SingIn />
-    </View>
+      <Routes/>
+    </NavigationContainer>
   );
 }
