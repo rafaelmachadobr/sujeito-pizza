@@ -23,15 +23,19 @@ export default function Dashboard() {
       return;
     }
 
-    navigation.navigate("Order", { number: number, order_id: "jwejwkk" });
+    navigation.navigate("Order", {
+      number: number,
+      order_id: "9557defc-bbd7-4af5-bc6c-ca18879ba328",
+    });
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Novo pedido</Text>
+
       <TextInput
         placeholder="Numero da mesa"
-        placeholderTextColor="#f0f0f0"
+        placeholderTextColor="#F0F0F0"
         style={styles.input}
         keyboardType="numeric"
         value={number}
@@ -56,7 +60,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: "bold",
-    color: "#fff",
+    color: "#FFF",
     marginBottom: 24,
   },
   input: {
@@ -66,8 +70,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     paddingHorizontal: 8,
     textAlign: "center",
-    fontSize: 20,
-    color: "#fff",
+    fontSize: 22,
+    color: "#FFF",
   },
   button: {
     width: "90%",

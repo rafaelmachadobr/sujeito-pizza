@@ -18,36 +18,33 @@ type RouteDetailParams = {
   };
 };
 
-type OrderRouterProps = RouteProp<RouteDetailParams, "Order">;
+type OrderRouteProps = RouteProp<RouteDetailParams, "Order">;
 
 export default function Order() {
-  const route = useRoute<OrderRouterProps>();
+  const route = useRoute<OrderRouteProps>();
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Mesa {route.params.number}</Text>
         <TouchableOpacity>
-          <Feather name="trash-2" size={28} color="#ff3f4b" />
+          <Feather name="trash-2" size={28} color="#FF3F4b" />
         </TouchableOpacity>
       </View>
 
       <TouchableOpacity style={styles.input}>
-        <Text style={{ color: "#fff" }}>Pizzas</Text>
+        <Text style={{ color: "#FFF" }}>Pizzas</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.input}>
-        <Text style={{ color: "#fff" }}>Pizzas de mussarela</Text>
+        <Text style={{ color: "#FFF" }}>Pizza de calabresa</Text>
       </TouchableOpacity>
 
       <View style={styles.qtdContainer}>
         <Text style={styles.qtdText}>Quantidade</Text>
         <TextInput
-          style={[
-            styles.input,
-            { width: "60%", textAlign: "center", marginTop: 12 },
-          ]}
-          placeholderTextColor="#f0f0f0"
+          style={[styles.input, { width: "60%", textAlign: "center", marginTop: 12 }]}
+          placeholderTextColor="#F0F0F0"
           keyboardType="numeric"
           value="1"
         />
@@ -83,7 +80,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: "bold",
-    color: "#fff",
+    color: "#FFF",
     marginRight: 14,
   },
   input: {
@@ -94,7 +91,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     justifyContent: "center",
     paddingHorizontal: 8,
-    color: "#fff",
+    color: "#FFF",
     fontSize: 20,
   },
   qtdContainer: {
@@ -105,7 +102,7 @@ const styles = StyleSheet.create({
   qtdText: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#fff",
+    color: "#FFF",
   },
   actions: {
     flexDirection: "row",

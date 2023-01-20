@@ -8,20 +8,19 @@ import AuthRoutes from "./auth.routes";
 import { AuthContext } from "../contexts/AuthContext";
 
 function Routes() {
-  const { isAuthenticated } = useContext(AuthContext)
-  const loading = false;
+  const { isAuthenticated, loading } = useContext(AuthContext);
 
   if (loading) {
     return (
       <View
         style={{
           flex: 1,
-          backgroundColor: "#1d1d2e",
+          backgroundColor: "#1D1D2E",
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <ActivityIndicator size={60} color="#f5f7fb" />
+        <ActivityIndicator size={60} color="#FFF" />
       </View>
     );
   }

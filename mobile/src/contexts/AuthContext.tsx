@@ -33,10 +33,10 @@ export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProps>({
-    id: "teste",
-    name: "teste",
-    email: "teste",
-    token: "teste",
+    id: "",
+    name: "",
+    email: "",
+    token: "",
   });
 
   const [loadingAuth, setLoadingAuth] = useState(false);
@@ -54,6 +54,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         api.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${hasUser.token}`;
+
         setUser({
           id: hasUser.id,
           name: hasUser.name,
@@ -61,8 +62,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
           token: hasUser.token,
         });
       }
+
       setLoading(false);
     }
+
     getUser();
   }, []);
 
@@ -116,8 +119,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         user,
         isAuthenticated,
         signIn,
-        loadingAuth,
         loading,
+        loadingAuth,
         signOut,
       }}
     >

@@ -22,6 +22,7 @@ function AppRoutes() {
         component={Dashboard}
         options={{ headerShown: false }}
       />
+
       <Stack.Screen
         name="Order"
         component={Order}
