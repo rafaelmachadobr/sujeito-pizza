@@ -13,6 +13,8 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackPramsList } from "../../routes/app.routes";
 
+import { api } from "../../services/api";
+
 export default function Dashboard() {
   const navigation = useNavigation<NativeStackNavigationProp<StackPramsList>>();
 
@@ -23,10 +25,16 @@ export default function Dashboard() {
       return;
     }
 
+    const response = await api.post("/order", {
+      table: Number(number),
+    });
+
     navigation.navigate("Order", {
       number: number,
-      order_id: "9557defc-bbd7-4af5-bc6c-ca18879ba328",
+      order_id: response.data.id,
     });
+
+    setNumber("");
   }
 
   return (
