@@ -12,6 +12,7 @@ import {
 import { useRoute, RouteProp, useNavigation } from "@react-navigation/native";
 
 import { Feather } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import { api } from "../../services/api";
 import { ModalPicker } from "../../components/ModalPicker";
 import { ListItem } from "../../components/ListItem";
@@ -122,6 +123,21 @@ export default function Order() {
     };
 
     setItems((oldArray) => [...oldArray, data]);
+    setAmount("1");
+  }
+
+  async function handleDeleteItem(item_id: string) {
+    await api.delete("/order/remove", {
+      params: {
+        item_id: item_id,
+      },
+    });
+
+    let removeItem = items.filter((item) => {
+      return item.id !== item_id;
+    });
+
+    setItems(removeItem);
   }
 
   return (
@@ -141,6 +157,7 @@ export default function Order() {
           onPress={() => setModalCategoryVisible(true)}
         >
           <Text style={{ color: "#FFF" }}>{categorySelected?.name}</Text>
+          <Entypo name="triangle-down" size={25} color="#8a8a8a" />
         </TouchableOpacity>
       )}
 
@@ -150,6 +167,7 @@ export default function Order() {
           onPress={() => setModalProductVisible(true)}
         >
           <Text style={{ color: "#FFF" }}>{productSelected?.name}</Text>
+          <Entypo name="triangle-down" size={25} color="#8a8a8a" />
         </TouchableOpacity>
       )}
 
@@ -186,7 +204,9 @@ export default function Order() {
         style={{ flex: 1, marginTop: 24 }}
         data={items}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <ListItem data={item} />}
+        renderItem={({ item }) => (
+          <ListItem data={item} deleteItem={handleDeleteItem} />
+        )}
       />
 
       <Modal
@@ -242,10 +262,12 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 40,
     marginBottom: 12,
-    justifyContent: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 8,
     color: "#FFF",
     fontSize: 20,
+    flexDirection: "row",
+    alignItems: "center",
   },
   qtdContainer: {
     flexDirection: "row",
