@@ -23,20 +23,29 @@
   word-break: break-all;
 }
 
+.total {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+}
+
+.text {
+  color: var(--red-900);
+  margin: 0.5rem 0;
+}
+
 .buttonOrder {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   background-color: rgba(0, 0, 0, 40%);
   border: 0;
   padding: 0.5rem 1rem;
   border-radius: 0.2rem;
-  color: var(--red-900);
+  color: var(--green-900);
 }
 
 .table {
   font-size: 1.4rem;
-  strong {
-    color: var(--red-900);
-  }
 }
 
 @media screen and (max-width: 700px) {

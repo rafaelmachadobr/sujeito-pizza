@@ -5,6 +5,8 @@ import { FiX } from "react-icons/fi";
 
 import { OrdeItemProps } from "../../pages/dashboard";
 
+import { useState, useEffect } from "react";
+
 interface ModalOrderProps {
   isOpen: boolean;
   onRequestClose: () => void;
@@ -29,6 +31,22 @@ export function ModalOrder({
       backgroundColor: "#1d1d2e",
     },
   };
+
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    setTotal(
+      order.reduce(
+        (acc, item) => acc + Number(item.product.price) * item.amount,
+        0
+      )
+    );
+  }, [order]);
+
+  const totalFormatted = total.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} style={customStyles}>
@@ -57,6 +75,11 @@ export function ModalOrder({
             </span>
           </section>
         ))}
+
+        <div className={styles.total}>
+          <span className={styles.text}>Total</span>
+          <span className={styles.value}><strong>{totalFormatted}</strong></span>
+        </div>
 
         <button
           className={styles.buttonOrder}
